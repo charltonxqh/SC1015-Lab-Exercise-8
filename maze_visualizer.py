@@ -8,7 +8,8 @@ color_map = {
     "white": 0,
     "black": 1,
     "yellow": 2,
-    "red": 3
+    "blue": 3,
+    "red": 4
 }
 
 
@@ -28,7 +29,7 @@ blank_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 
 
 sample_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-               [1, 3, 1, 0, 0, 0, 0, 1, 0, 0, 3, 1],
+               [1, 4, 1, 0, 0, 0, 0, 1, 0, 0, 4, 1],
                [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1],
                [1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
                [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
@@ -37,7 +38,7 @@ sample_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                [1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1],
                [1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1],
                [1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1],
-               [1, 3, 1, 0, 0, 0, 0, 0, 0, 0, 3, 1],
+               [1, 4, 1, 0, 0, 0, 0, 0, 0, 0, 4, 1],
                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
 
@@ -67,6 +68,18 @@ def show_maze(grid):
     # Display the plot
     plt.show()
 
+    
+# Accepts a list of coordinates of the path squares
+# Checks if all path squares are valid before adding them to the maze grid
+def add_path(grid, path):
+    for coords in range(len(path)):
+        x, y = path[coords]
+        if grid[x][y] == 1:
+            raise ValueError(f"Invalid path! Failed to add ({x}, {y})")
+        grid[x][y] = 3
+    
+    return grid
+        
 
 # Helper function to determine maze validity
 def valid_maze(grid):
@@ -76,7 +89,20 @@ def valid_maze(grid):
         for j in range(len(grid[i])):
             if grid[i][j] == 2:
                 yellow = True
-            elif grid[i][j] == 3:
+            elif grid[i][j] == 4:
                 red = True
     
     return yellow and red
+
+
+
+# SAMPLE USAGE:
+# Visualize a blank maze
+show_maze(sample_maze)
+
+# List storing valid path squares 
+path = [[6, 6], [6, 5], [6, 4], [5, 4], [5, 3], [5, 2], [5, 1], [4, 1], [3, 1], [2, 1]]
+
+# Visualize the searched maze
+add_path(sample_maze, path)
+show_maze(sample_maze)
