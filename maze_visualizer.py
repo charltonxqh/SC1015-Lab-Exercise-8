@@ -3,6 +3,23 @@ import matplotlib.pyplot as plt                 # type: ignore
 from matplotlib.colors import ListedColormap    # type: ignore
 
 
+# USAGE EXAMPLE
+# 
+# # Import module
+# from maze_visualizer import *
+
+# # Visualize a blank maze
+# show_maze(sample_maze)
+
+# # List storing valid path squares 
+# path = [[6, 6], [6, 5], [6, 4], [5, 4], [5, 3], [5, 2], [5, 1], [4, 1], [3, 1], [2, 1]]
+
+# # Visualize the searched maze
+# add_path(sample_maze, path)
+# show_maze(sample_maze)
+# 
+
+
 # Define mapping of colors
 color_map = {
     "white": 0,
@@ -93,16 +110,3 @@ def valid_maze(grid):
                 red = True
     
     return yellow and red
-
-
-
-# SAMPLE USAGE:
-# Visualize a blank maze
-show_maze(sample_maze)
-
-# List storing valid path squares 
-path = [[6, 6], [6, 5], [6, 4], [5, 4], [5, 3], [5, 2], [5, 1], [4, 1], [3, 1], [2, 1]]
-
-# Visualize the searched maze
-add_path(sample_maze, path)
-show_maze(sample_maze)
