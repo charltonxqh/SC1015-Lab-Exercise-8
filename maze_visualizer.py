@@ -10,19 +10,21 @@ USAGE EXAMPLE
 from maze_visualizer import *
 
 # Visualize a blank maze
+show_maze(sample_maze)
+
+# Visualize a maze with Pac-Man at (5, 6)
 show_maze(sample_maze, (5, 6))
 
 # List storing valid cell coordinates
 path = [[6, 6], [6, 5], [6, 4], [5, 4], [5, 3], [5, 2], [5, 1], [4, 1], [3, 1], [2, 1]]
 
 # Visualize the searched maze
-add_path(sample_maze, path)
-show_maze(sample_maze)
+show_maze(sample_maze, (5, 6), path)
 
 '''
 
 
-# Edit these for your own maze design
+# Edit this for your own maze design
 blank_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
               [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -37,6 +39,7 @@ blank_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]
 
 
+# For testing
 sample_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                [1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
                [1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1],
@@ -53,7 +56,7 @@ sample_maze = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 
     
 # Visualises the maze corresponding to grid passed in
-def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1]):
+def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1], CELL_SIZE=3):
     # Make a copy of the maze
     grid_copy = deepcopy(grid)
     
@@ -66,8 +69,8 @@ def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1]):
     }
     
     # Input validation
-#     if not valid_maze(grid):
-#         raise ValueError("Maze is incomplete! Must have all four colors")
+    # if not valid_maze(grid):
+    #    raise ValueError("Maze is incomplete! Must have all four colors")
     
     # Add path to the maze
     if path:
@@ -90,7 +93,7 @@ def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1]):
     cmap = ListedColormap(colors)
 
     # Create a figure and axis
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(CELL_SIZE, CELL_SIZE))
 
     # Draw the grid with the custom colormap
     ax.imshow(grid_copy, cmap=cmap, interpolation='nearest')
@@ -102,7 +105,15 @@ def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1]):
     plt.show()
 
 
-# Helper functions
+# Visualises the complete solution found by a search
+# Works by displaying each segment of the solution path with a copy of the maze
+def show_solution(maze, start, path):
+    for segment in path:
+        show_maze(maze, start, segment)
+
+
+    
+# Helper function
 # Accepts a list of coordinates of the path squares
 # Checks if all path squares are valid before adding them to the maze grid
 def add_path(grid, path):
