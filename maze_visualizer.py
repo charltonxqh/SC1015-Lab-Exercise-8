@@ -75,16 +75,16 @@ def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1], CELL_SIZE=
     # Add path to the maze
     if path:
         grid_copy = add_path(grid_copy, path)
-        
-    # Add Pac-Man to the maze
-    if start:
-        grid_copy[start[0]][start[1]] = color_map["yellow"]
     
     # Add color for four corners
     corners = [(1, 1), (1, len(grid[0]) - 2), (len(grid) - 2, 1), (len(grid) - 2, len(grid[0]) - 2)]
     for i in range(4):
         if show_corners[i]:
             grid_copy[corners[i][0]][corners[i][1]] = color_map["red"]
+        
+    # Add Pac-Man to the maze
+    if start:
+        grid_copy[start[0]][start[1]] = color_map["yellow"]
     
     # Define the colors for specific values
     colors = color_map.keys()
@@ -108,8 +108,11 @@ def show_maze(grid, start=None, path=None, show_corners=[1, 1, 1, 1], CELL_SIZE=
 # Visualises the complete solution found by a search
 # Works by displaying each segment of the solution path with a copy of the maze
 def show_solution(maze, start, path):
+    corners = [(1, 1), (1, len(maze[0]) - 2), (len(maze) - 2, 1), (len(maze) - 2, len(maze[0]) - 2)]
+    label = [1, 1, 1, 1]
     for segment in path:
-        show_maze(maze, start, segment)
+        show_maze(maze, segment[0], segment, label)
+        label[corners.index(segment[-1])] = 0
 
 
     
