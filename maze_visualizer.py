@@ -141,3 +141,11 @@ def valid_maze(grid):
                 red = True
     
     return yellow and red
+
+# Count the number of steps
+def count_steps(path):
+    count = 0
+    for segment in path:
+        count += len(segment)
+
+    return (count - 3)
